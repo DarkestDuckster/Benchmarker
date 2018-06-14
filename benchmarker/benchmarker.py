@@ -1,4 +1,4 @@
-import Benchmarker.benchmark_timer as bm
+import benchmarker.benchmark_timer as bm
 
 t = bm.benchmark_timer()
 
