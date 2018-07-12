@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import benchmarker.benchmark_timer as bm
 
 _t = bm.benchmark_timer()

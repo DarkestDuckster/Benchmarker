@@ -92,7 +92,7 @@ class benchmark_timer:
             offset += 3
         if not self._times:
             print ("No times recorded yet")
-        for key in self._times.keys():
+        for key in sorted(self._times.keys()):
                 print ("{:<{pad}}'\033[1;31m{}\033[0m' took a total time of \033[1;33m{:f}\033[0m with an average of time \033[1;33m{:f}\033[0m".
                         format(depth,key,self._times[key],self._times[key]/self._ttimes[key],pad=offset))
                 if key in self._timers:
