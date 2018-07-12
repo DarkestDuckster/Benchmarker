@@ -1,18 +1,18 @@
 import benchmarker.benchmark_timer as bm
 
-t = bm.benchmark_timer()
+_t = bm.benchmark_timer()
 
 def startTiming(name = None):
-    t.startTiming(name)
+    _t.startTiming(name)
 
 def endTiming(name = None):
-    t.endTiming(name)
+    _t.endTiming(name)
 
 def newTiming(name = None):
-    t.newTiming(name)
+    _t.newTiming(name)
 
 def endAllTiming():
-    t.endAllTiming()
+    _t.endAllTiming()
 
 def getTimes():
-    t.getTimes()
+    _t.getTimes()

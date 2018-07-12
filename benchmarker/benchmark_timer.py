@@ -1,32 +1,43 @@
 import time
 
-class benchmark_timer():
+'''
+Block Elements found at range:
+    0x2580 -> 0x259F
+'''
 
-    time_vars = {   'start': None,          # Used to measure time
-                    'times': dict(),        # Keeps track of total time
-                    'ttimes' : dict(),      # Keeps track of number of number of times a time has been taken
-                    'time_hist' : dict(),   # Keeps history of the times
-                    'current' : None,       # Tracks the current section name
-                    'timers' : dict()}      # Implements a component structure.
+class benchmark_timer:
+    '''
+    To be used by the benchmarker module, keeps track of a nested structure of times.
 
-    def __init__(self):
+    variable explanations:
+        'start': None,          # Used to measure time
+        'times': dict(),        # Keeps track of total time
+        'ttimes' : dict(),      # Keeps track of number of number of times a time has been taken
+        'time_hist' : dict(),   # Keeps history of the times
+        'current' : None,       # Tracks the current section name
+        'timers' : dict()       # Implements a component structure.
+        'level' : int           # Keeps track of the current depth of the timer
+    '''
+
+    def __init__(self, level = 0):
         self._start = None
         self._times = dict()
         self._ttimes = dict()
         self._time_hist = dict()
         self._current = None
         self._timers = dict()
+        self._level = level
 
     def startTiming(self, name = None):
         if name is None:
-            name = '000'
+            name = 'NO_NAME_GIVEN'
         if self._current is None:
             self._current = name
             self._start = time.clock()
         else:
             keyval = self._current
             if keyval not in self._timers.keys():
-                self._timers[keyval] = benchmark_timer()
+                self._timers[keyval] = benchmark_timer(self._level+1)
             self._timers[keyval].startTiming(name)
 
     def endTiming(self, name = None, tm = None):
@@ -76,7 +87,7 @@ class benchmark_timer():
 
     def getTimes(self,offset = None, depth = 1):
         if offset is None:
-            offset = 1
+            offset = 0
         else:
             offset += 3
         if not self._times:
