@@ -17,3 +17,6 @@ def endAllTiming():
 
 def getTimes():
     _t.getTimes()
+
+def showTimes():
+    _t.showTimes()

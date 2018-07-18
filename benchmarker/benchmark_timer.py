@@ -85,7 +85,7 @@ class benchmark_timer:
             self.startTiming(name)
 
 
-    def getTimes(self,offset = None, depth = 1):
+    def getTimes(self,offset = None, prefix = ""):
         if offset is None:
             offset = 0
         else:
@@ -93,16 +93,21 @@ class benchmark_timer:
         if not self._times:
             print ("No times recorded yet")
         for key in sorted(self._times.keys()):
-                print ("{:<{pad}}'\033[1;31m{}\033[0m' took a total time of \033[1;33m{:f}\033[0m with an average of time \033[1;33m{:f}\033[0m".
-                        format(depth,key,self._times[key],self._times[key]/self._ttimes[key],pad=offset))
+                print ("\033[0;31m{:<{pad}}\033[1;31m{}\033[0m took a total time of \033[1;33m{:f}\033[0m with an average time of \033[1;33m{:f}\033[0m".
+                        format(prefix,key,self._times[key],self._times[key]/self._ttimes[key],pad=0))
                 if key in self._timers:
-                    new_depth = depth+1
-                    self._timers[key].getTimes(offset,new_depth)
+                    new_prefix = prefix + key + "\\"
+                    self._timers[key].getTimes(offset,new_prefix)
 
     def getTimeHist(name):
         assert name in self._time_hist, 'No history found for key {}'.format(name)
         return self._time_hist[name]
 
+    def showTimes(self):
+        str = ""
+        for i in range(0x2580,0x259f):
+            str += chr(0x2588) + chr(i) + " "
+        print(str)
 
     def reset():
         self._times.clear()
