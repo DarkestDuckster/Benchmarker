@@ -80,8 +80,10 @@ class benchmark_timer:
     def newTiming(self, name = None):
         if self._current in self._timers and self._timers[self._current]._current is not None:
             self._timers[self._current].newTiming(name)
-        elif self._current is not name:
+        elif self._current is not None:
             self.endTiming()
+            self.startTiming(name)
+        else:
             self.startTiming(name)
 
 
@@ -108,6 +110,14 @@ class benchmark_timer:
         for i in range(0x2580,0x259f):
             str += chr(0x2588) + chr(i) + " "
         print(str)
+
+    def showTree(self, prefix="",name=""):
+        print("{0}{1}".format(prefix,name))
+        for index, key in enumerate(sorted(self._times.keys())):
+            if key in self._timers:
+                new_prefix = prefix + (("├" if len(prefix) == 0 else "┬") if not name == "" else "")
+                self._timers[key].showTree(new_prefix,key)
+
 
     def reset():
         self._times.clear()

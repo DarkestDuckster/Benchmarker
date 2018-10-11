@@ -20,3 +20,6 @@ def getTimes():
 
 def showTimes():
     _t.showTimes()
+
+def showTree():
+    _t.showTree()
